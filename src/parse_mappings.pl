@@ -110,7 +110,8 @@ sub parse_file_arf{
 
 #	    if($options{k}){print STDERR "$running\r";}
 
-	    if($options{j}){($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string)=remove_trailing_nts($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string);}
+		#if($options{j}){($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string)=remove_trailing_nts($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string);}
+	    if($options{j}){($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string,$db_beg)=remove_trailing_nts($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string,$strand,$db_beg);}
 
 	    #discard mappings based on criteria a-g
 	    if(defined $options{a} and $options{a}<$edits){next;}
@@ -142,7 +143,7 @@ sub parse_file_arf{
 
 sub remove_trailing_nts{
 
-    my($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string)=@_;
+    my($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string,$strand,$db_beg)=@_;
 
     while($edit_string=~/M$/){
 
@@ -150,13 +151,18 @@ sub remove_trailing_nts{
 	$query_end--;
 	chop $query_seq;
 	$db_map_lng--;
-	$db_end--;
+	if($strand eq '+'){
+		$db_end--;
+	}else{
+		$db_beg++;
+	}
+
 	chop $db_seq;
 	$edits--;
 	chop $edit_string;
     }
 
-    return ($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string);
+    return ($query_map_lng,$query_end,$query_seq,$db_map_lng,$db_end,$db_seq,$edits,$edit_string,$db_beg);
 }
 
 
