@@ -1,0 +1,10 @@
+services:
+  mirdeep2:
+    image: benson1231/mirdeep2:latest
+    container_name: mirdeep2
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    stdin_open: true
+    tty: true
+    entrypoint: ["bash"]
