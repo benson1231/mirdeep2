@@ -1,8 +1,54 @@
-# quick test run
-
-[run_test.md](./run_test.md)
+> This repository is forked from the original [miRDeep2](https://github.com/rajewsky-lab/mirdeep2) project.
+> Only environment setup (Docker) and directory structure were modified.
+> All copyrights and core algorithms remain with the original authors.
 
 ---
+
+# Using Docker
+
+## Option 1: Build the image locally
+
+```bash
+docker build -t benson1231/mirdeep2:latest .
+
+docker run -it \
+  -v $(pwd):/work \
+  benson1231/mirdeep2:latest
+```
+
+## Option 2: Use Docker Compose
+
+```bash
+docker compose run --rm mirdeep2
+```
+
+After the container starts, you can verify that required tools are available:
+
+```bash
+which miRDeep2.pl
+bowtie --version
+RNAfold --version
+```
+
+# Run the test workflow
+
+```bash
+cd tutorial_dir
+./run_tut.sh
+```
+
+# Download reference sequences
+
+miRNA reference sequences can be downloaded from **miRBase**:
+
+* [https://www.mirbase.org/download/CURRENT/](https://www.mirbase.org/download/CURRENT/)
+
+Use the *mature* and *hairpin* FASTA files corresponding to your species of interest.
+
+---
+
+> The following section is the original README from the miRDeep2 project.
+> The content is preserved as-is, with no substantive modifications.
 
 [![Build Status](https://travis-ci.org/rajewsky-lab/mirdeep2.svg?branch=master)](https://travis-ci.org/rajewsky-lab/mirdeep2)
 

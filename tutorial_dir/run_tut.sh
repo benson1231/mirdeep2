@@ -2,12 +2,15 @@
 set -e
 
 # 建立輸出資料夾
-mkdir -p results
+mkdir -p index
+mkdir -p mapping
+mkdir -p bowtie_logs
+mkdir -p results/logs
 
 ############################
 # 1. Build bowtie index
 ############################
-bowtie-build cel_cluster.fa results/cel_cluster
+bowtie-build refs/cel_cluster.fa index/cel_cluster
 ec=$?
 if [ $ec != 0 ]; then
   echo "An error occurred in bowtie-build, exit code $ec"
@@ -17,13 +20,13 @@ fi
 ############################
 # 2. mapper.pl
 ############################
-mapper.pl reads.fa \
+mapper.pl data/new_reads.fa \
   -c -j \
   -k TCGTATGCCGTCTTCTGCTTGT \
   -l 18 -m \
-  -p results/cel_cluster \
-  -s results/reads_collapsed.fa \
-  -t results/reads_collapsed_vs_genome.arf \
+  -p index/cel_cluster \
+  -s mapping/reads_collapsed.fa \
+  -t mapping/reads_collapsed_vs_genome.arf \
   -v -n
 
 ec=$?
@@ -32,6 +35,9 @@ if [ $ec != 0 ]; then
   exit $ec
 fi
 
+mv bowtie.log bowtie_logs/bowtie.log
+echo "mapper.pl finished successfully."
+
 ############################
 # 3. miRDeep2.pl
 #    在 results/ 目錄中執行
@@ -39,15 +45,15 @@ fi
 cd results
 
 miRDeep2.pl \
-  reads_collapsed.fa \
-  ../cel_cluster.fa \
-  reads_collapsed_vs_genome.arf \
-  ../mature_ref_this_species_3p5p_test.fa \
-  ../mature_ref_other_species.fa \
-  ../precursors_ref_this_species.fa \
+  ../mapping/reads_collapsed.fa \
+  ../refs/cel_cluster.fa \
+  ../mapping/reads_collapsed_vs_genome.arf \
+  ../refs/mature_ref_this_species.fa \
+  ../refs/mature_ref_other_species.fa \
+  ../refs/precursors_ref_this_species.fa \
   -t C.elegans \
   -P \
-  2> report.log
+  2> logs/report.log
 
 ec=$?
 if [ $ec != 0 ]; then

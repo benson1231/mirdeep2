@@ -5,3 +5,6 @@ test
 tutorial_dir/results/
 tutorial_dir/bowtie.log
 tutorial_dir/mapper_logs/
+tutorial_dir/index/
+tutorial_dir/bowtie_logs/
+tutorial_dir/mapping/
