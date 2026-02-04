@@ -28,3 +28,7 @@ RNAfold --version
 cd tutorial_dir
 ./run_tut.sh
 ```
+
+# 下載序列
+
+[mirbase](https://www.mirbase.org/download/CURRENT/)

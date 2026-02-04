@@ -42,10 +42,11 @@ miRDeep2.pl \
   reads_collapsed.fa \
   ../cel_cluster.fa \
   reads_collapsed_vs_genome.arf \
-  ../mature_ref_this_species.fa \
+  ../mature_ref_this_species_3p5p_test.fa \
   ../mature_ref_other_species.fa \
   ../precursors_ref_this_species.fa \
   -t C.elegans \
+  -P \
   2> report.log
 
 ec=$?
