@@ -6,7 +6,13 @@
 
 # Using Docker
 
-## Option 1: Build the image locally
+## Option 1: Use Docker Compose(recommended)
+
+```bash
+docker compose run --rm mirdeep2
+```
+
+## Option 2: Build the image locally
 
 ```bash
 docker build -t benson1231/mirdeep2:latest .
@@ -14,12 +20,6 @@ docker build -t benson1231/mirdeep2:latest .
 docker run -it \
   -v $(pwd):/work \
   benson1231/mirdeep2:latest
-```
-
-## Option 2: Use Docker Compose
-
-```bash
-docker compose run --rm mirdeep2
 ```
 
 After the container starts, you can verify that required tools are available:
