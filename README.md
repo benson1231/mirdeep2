@@ -84,6 +84,16 @@ wget -P data https://www.encodeproject.org/files/ENCFF345NIW/@@download/ENCFF345
 ./run_workflow.sh
 ```
 
+you will find results in the `results` folder
+
+### if you need `multiqc` results
+
+```bash
+mamba env create -f https://raw.githubusercontent.com/benson1231/tools/main/envs/ngs-tools.yaml -y
+mamba activate ngs-tools
+multiqc ./workflow
+mamba deactivate
+```
 
 ---
 

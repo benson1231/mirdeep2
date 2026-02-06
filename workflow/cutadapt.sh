@@ -6,6 +6,7 @@ source .env
 
 # create output dir
 mkdir -p "$TRIM_DIR"
+mkdir -p "$FASTQC_DIR"
 
 # file paths
 TRIM_FILE="$TRIM_DIR/${SAMPLE_NAME}${SUFFIX_TRIM}"
@@ -48,11 +49,14 @@ cutadapt \
 # ---------------- QC ----------------
 fastqc \
   -t "$FASTQC_THREADS" \
+  "$INPUT_FASTQ" \
   "$TRIM_FILE" \
-  -o "$TRIM_DIR"
+  "$NO_3AD_FILE" \
+  "$NO_5AD_FILE" \
+  "$TOO_SHORT_FILE" \
+  -o "$FASTQC_DIR"
 
 echo "=============================="
-echo "Trimming finished"
-echo "Output trimmed file:"
-echo "$TRIM_FILE"
+echo "QC finished"
+echo "FastQC dir : $FASTQC_DIR"
 echo "=============================="
