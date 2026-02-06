@@ -12,6 +12,12 @@ RUN micromamba install -y -n base -c bioconda -c conda-forge \
     perl \
     perl-font-ttf \
     perl-pdf-api2 \
+    wget\
+    cutadapt \
+    seqtk \
+    fastqc \
+    fastp \
+    multiqc \
     && micromamba clean --all --yes
 
 # 確保 binary 在 PATH

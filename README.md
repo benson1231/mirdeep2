@@ -4,15 +4,16 @@
 
 ---
 
-# Using Docker
+# Environment
+## Using Docker
 
-## Option 1: Use Docker Compose(recommended)
+### Option 1: Use Docker Compose(recommended)
 
 ```bash
 docker compose run --rm mirdeep2
 ```
 
-## Option 2: Build the image locally
+### Option 2: Build the image locally
 
 ```bash
 docker build -t benson1231/mirdeep2:latest .
@@ -30,20 +31,59 @@ bowtie --version
 RNAfold --version
 ```
 
-# Run the test workflow
+## Run the test workflow using `C. elegans` data
 
 ```bash
 cd tutorial_dir
 ./run_tut.sh
 ```
 
-# Download reference sequences
+---
 
-miRNA reference sequences can be downloaded from **miRBase**:
+# run human data
 
-* [https://www.mirbase.org/download/CURRENT/](https://www.mirbase.org/download/CURRENT/)
+## Option 1: download reference using `download_reference.sh`
 
-Use the *mature* and *hairpin* FASTA files corresponding to your species of interest.
+```bash
+cd workflow/
+./download_reference.sh
+```
+
+## Option 2: download reference sequences from web source and put them into `workflow/refs` folder
+
+### download `miRNA reference`
+miRNA reference sequences can be downloaded from [miRBase](https://mirbase.org/download/)，we need two files:
+
+* `mature.fa`
+* `hairpin.fa`
+
+```bash
+# 抽 human miRNA
+extract_miRNAs.pl refs/mature.fa hsa > refs/mature_ref_this_species.fa
+extract_miRNAs.pl refs/hairpin.fa hsa > refs/precursors_ref_this_species.fa
+
+# 抽其他近緣物種 miRNA
+extract_miRNAs.pl refs/mature.fa mmu,rno > refs/mature_ref_other_species.fa
+```
+
+### download `human reference genome`
+
+
+### download test small RNAseq fastq data from `encodeproject`
+
+* [ENCSR105ZCZ](https://www.encodeproject.org/experiments/ENCSR105ZCZ/)
+
+```bash
+wget -P data https://www.encodeproject.org/files/ENCFF345NIW/@@download/ENCFF345NIW.fastq.gz
+```
+
+### run workflow in `workflow` folder
+
+```bash
+./cutadapt.sh
+./run_workflow.sh
+```
+
 
 ---
 
